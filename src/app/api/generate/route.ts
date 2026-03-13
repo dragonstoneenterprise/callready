@@ -68,7 +68,7 @@ FINANCIAL DATA:
 ${metrics ? JSON.stringify(metrics, null, 2) : "Use data from transcript"}
 
 TRANSCRIPT/NOTES:
-${anonymizedTranscript.substring(0, 10000)}
+${anonymizedTranscript.substring(0, 5000)}
 
 OUTPUT FORMAT (JSON only, valid JSON):
 {
