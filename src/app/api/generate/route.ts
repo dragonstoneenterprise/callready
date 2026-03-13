@@ -109,8 +109,8 @@ Requirements:
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://earnings-pipeline.app",
-        "X-Title": "Earnings Pipeline",
+        "HTTP-Referer": "https://callready.app",
+        "X-Title": "CallReady",
       },
       body: JSON.stringify({
         model: "minimax/minimax-m2.1",

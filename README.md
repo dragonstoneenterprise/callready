@@ -2,6 +2,10 @@
 
 Enterprise Earnings Call Script Generator with Multi-User Approval.
 
+## Repository
+
+https://github.com/dragonstoneenterprise/callready
+
 ## What It Does
 
 Transform quarterly financials (10-Q, 10-K, earnings transcripts) into board-ready earnings call scripts in minutes. Features multi-user approval workflow for CEO, CFO, and Legal review.
