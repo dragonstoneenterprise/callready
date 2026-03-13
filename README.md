@@ -1,25 +1,28 @@
-# Earnings Pipeline
+# CallReady
 
-Enterprise Earnings Call Script Generator.
+Enterprise Earnings Call Script Generator with Multi-User Approval.
 
 ## What It Does
 
-Transform quarterly financials (10-Q, 10-K, earnings transcripts) into board-ready earnings call scripts in minutes.
+Transform quarterly financials (10-Q, 10-K, earnings transcripts) into board-ready earnings call scripts in minutes. Features multi-user approval workflow for CEO, CFO, and Legal review.
 
 ## Features
 
 - **Intake Engine** - Upload PDF documents (10-Q, 10-K, transcripts)
 - **Strategy Brief** - AI-generated narrative + competitive intel
 - **Script Generator** - Speaker-attributed scripts (CEO, CFO, COO)
-- **Export** - PDF with audit trail
+- **Multi-User Approval** - CEO, CFO, Legal review workflow
+- **Audit Trail** - Full compliance tracking
+- **Export** - Professional PDF with all approvals
 
 ## Pricing
 
 | Tier | Price | Target |
 |------|-------|--------|
-| Basic | $297/mo | Small public companies |
-| Pro | $497/mo | Mid-cap companies |
-| Enterprise | $997/mo | Large caps / IR firms |
+| Pre-IPO | $49/mo | Companies preparing to go public |
+| Small Public | $99-297/mo | Public companies with <$1B market cap |
+| Pro | $297-497/mo | Mid-cap companies |
+| Enterprise | $497-997/mo | Large caps / IR firms |
 
 ## Setup
 
@@ -40,7 +43,7 @@ npx vercel
 - Next.js 14
 - Tailwind CSS
 - OpenRouter API (MiniMax)
-- PDF processing
+- Security: Audit logging, data anonymization, SOC2 ready
 
 ## Cost
 
@@ -50,7 +53,16 @@ npx vercel
 
 ## Target Market
 
-- Public companies (IR teams)
-- Financial advisors
+- Pre-IPO companies (learning to do earnings calls)
+- Small public companies (no dedicated IR team)
 - Investor relations firms
 - C-suite executives
+
+## Security & Compliance
+
+- SOC2 Ready
+- SEC/Reg FD Compliant
+- Full Audit Trail
+- Data Never Used for AI Training
+- Enterprise Encryption
+- No Data Retention

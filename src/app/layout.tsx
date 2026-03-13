@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Earnings Pipeline - Enterprise Earnings Call Script Generator",
-  description: "Transform quarterly financials into board-ready earnings call scripts. SEC compliant, multi-user approval, audit trail.",
+  title: "CallReady - Enterprise Earnings Call Script Generator",
+  description: "Transform quarterly financials into board-ready earnings call scripts with multi-user approval. SEC compliant, audit trail, enterprise security.",
 };
 
 export default function RootLayout({

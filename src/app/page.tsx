@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Upload, FileText, Download, Loader2, CheckCircle, Users, BarChart3, Sparkles, Calendar } from "lucide-react";
+import { Upload, FileText, Download, Loader2, CheckCircle, Users, BarChart3, Sparkles, Calendar, Mail, Clock, UserCheck, AlertCircle } from "lucide-react";
 
 interface EarningsData {
   revenue?: string;
@@ -17,13 +17,30 @@ interface ScriptSection {
   content: string;
 }
 
+interface Reviewer {
+  id: string;
+  name: string;
+  email: string;
+  role: "CEO" | "CFO" | "GC" | "IR" | "COO";
+  status: "pending" | "approved" | "rejected";
+  timestamp?: string;
+  comments?: string;
+}
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [earningsData, setEarningsData] = useState<EarningsData | null>(null);
   const [scripts, setScripts] = useState<ScriptSection[]>([]);
-  const [activeTab, setActiveTab] = useState<"intake" | "metrics" | "script">("intake");
+  const [activeTab, setActiveTab] = useState<"intake" | "metrics" | "script" | "approval">("intake");
+  const [reviewers, setReviewers] = useState<Reviewer[]>([
+    { id: "1", name: "", email: "", role: "CEO", status: "pending" },
+    { id: "2", name: "", email: "", role: "CFO", status: "pending" },
+    { id: "3", name: "", email: "", role: "GC", status: "pending" },
+  ]);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteRole, setInviteRole] = useState<Reviewer["role"]>("IR");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +136,7 @@ With that, let's open the line for questions.`
             </div>
             <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                Earnings Pipeline
+                CallReady
               </h1>
               <p className="text-xs text-zinc-500">Enterprise Earnings Call Script Generator</p>
             </div>
@@ -141,17 +158,19 @@ With that, let's open the line for questions.`
               { key: "intake", label: "Intake", icon: Upload },
               { key: "metrics", label: "Strategy", icon: BarChart3 },
               { key: "script", label: "Script", icon: FileText },
+              { key: "approval", label: "Approval", icon: UserCheck },
             ].map((step, i) => (
               <div key={step.key} className="flex items-center gap-2">
                 <button
                   onClick={() => {
                     if (step.key === "metrics" && earningsData) setActiveTab("metrics");
                     if (step.key === "script" && scripts.length > 0) setActiveTab("script");
+                    if (step.key === "approval" && scripts.length > 0) setActiveTab("approval");
                   }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     activeTab === step.key
                       ? "bg-emerald-600/10 text-emerald-400 border border-emerald-600/20"
-                      : earningsData && (step.key === "metrics" || (step.key === "script" && scripts.length > 0))
+                      : earningsData && (step.key === "metrics" || (step.key === "script" && scripts.length > 0) || (step.key === "approval" && scripts.length > 0))
                       ? "text-zinc-400 hover:text-zinc-200"
                       : "text-zinc-600 cursor-not-allowed"
                   }`}
@@ -319,20 +338,233 @@ With that, let's open the line for questions.`
               ))}
             </div>
 
+            {/* Multi-User Approval Workflow */}
             <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-zinc-100 mb-4">Approval Chain</h3>
-              <div className="flex items-center gap-4">
-                {["CEO", "CFO", "GC"].map((role, i) => (
-                  <div key={role} className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-sm text-zinc-400">
-                      {role[0]}
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+                    <UserCheck className="w-5 h-5 text-emerald-400" />
+                    Multi-User Approval
+                  </h3>
+                  <p className="text-sm text-zinc-400 mt-1">Each stakeholder reviews and approves their section</p>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-zinc-400">
+                    {reviewers.filter(r => r.status === "approved").length}/{reviewers.length} Approved
+                  </span>
+                  {reviewers.every(r => r.status === "approved") && (
+                    <span className="px-2 py-1 bg-emerald-600/20 text-emerald-400 rounded text-xs font-medium">
+                      Ready to Export
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Reviewer List */}
+              <div className="space-y-3 mb-6">
+                {reviewers.map((reviewer) => (
+                  <div key={reviewer.id} className="flex items-center justify-between bg-zinc-800/50 rounded-lg p-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
+                        reviewer.status === "approved" 
+                          ? "bg-emerald-600/20 text-emerald-400 border border-emerald-600/30"
+                          : reviewer.status === "rejected"
+                          ? "bg-red-600/20 text-red-400 border border-red-600/30"
+                          : "bg-zinc-700 text-zinc-400 border border-zinc-600"
+                      }`}>
+                        {reviewer.status === "approved" ? (
+                          <CheckCircle className="w-5 h-5" />
+                        ) : reviewer.status === "rejected" ? (
+                          <AlertCircle className="w-5 h-5" />
+                        ) : (
+                          reviewer.role[0]
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-medium text-zinc-200">{reviewer.role}</p>
+                        {reviewer.email && (
+                          <p className="text-xs text-zinc-500">{reviewer.email}</p>
+                        )}
+                        {reviewer.timestamp && (
+                          <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
+                            <Clock className="w-3 h-3" />
+                            {new Date(reviewer.timestamp).toLocaleString()}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <span className="text-sm text-zinc-500">{role}</span>
-                    {i < 2 && <div className="w-8 h-px bg-zinc-700" />}
+                    <div className="flex items-center gap-2">
+                      {reviewer.status === "pending" ? (
+                        <>
+                          <button
+                            onClick={() => {
+                              setReviewers(prev => prev.map(r => 
+                                r.id === reviewer.id 
+                                  ? { ...r, status: "approved", timestamp: new Date().toISOString() }
+                                  : r
+                              ));
+                            }}
+                            className="px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 text-sm rounded-lg transition-colors"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => {
+                              setReviewers(prev => prev.map(r => 
+                                r.id === reviewer.id 
+                                  ? { ...r, status: "rejected", timestamp: new Date().toISOString() }
+                                  : r
+                              ));
+                            }}
+                            className="px-3 py-1.5 bg-zinc-700 hover:bg-zinc-600 text-zinc-400 text-sm rounded-lg transition-colors"
+                          >
+                            Request Changes
+                          </button>
+                        </>
+                      ) : (
+                        <span className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+                          reviewer.status === "approved"
+                            ? "bg-emerald-600/20 text-emerald-400"
+                            : "bg-red-600/20 text-red-400"
+                        }`}>
+                          {reviewer.status === "approved" ? "Approved" : "Changes Requested"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Invite New Reviewer */}
+              <div className="border-t border-zinc-800 pt-4">
+                <p className="text-sm text-zinc-400 mb-3">Invite additional reviewer</p>
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    placeholder="reviewer@company.com"
+                    className="flex-1 px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+                  />
+                  <select
+                    value={inviteRole}
+                    onChange={(e) => setInviteRole(e.target.value as Reviewer["role"])}
+                    className="px-3 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/50"
+                  >
+                    <option value="CEO">CEO</option>
+                    <option value="CFO">CFO</option>
+                    <option value="COO">COO</option>
+                    <option value="GC">General Counsel</option>
+                    <option value="IR">IR Lead</option>
+                  </select>
+                  <button
+                    onClick={() => {
+                      if (inviteEmail) {
+                        setReviewers(prev => [...prev, {
+                          id: Date.now().toString(),
+                          name: "",
+                          email: inviteEmail,
+                          role: inviteRole,
+                          status: "pending"
+                        }]);
+                        setInviteEmail("");
+                      }
+                    }}
+                    className="px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-zinc-200 rounded-lg transition-colors text-sm"
+                  >
+                    <Mail className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Approval Tab */}
+        {activeTab === "approval" && scripts.length > 0 && (
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div>
+              <h2 className="text-xl font-bold text-zinc-100 mb-2">Multi-User Approval</h2>
+              <p className="text-zinc-400">Review and approve the earnings call script</p>
+            </div>
+
+            {/* Script Preview */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 max-h-64 overflow-y-auto">
+              <h3 className="text-sm font-medium text-zinc-400 mb-4">Script Preview</h3>
+              {scripts.map((script, i) => (
+                <div key={i} className="mb-4 last:mb-0">
+                  <p className="text-xs text-emerald-400 mb-1">{script.speaker} — {script.title}</p>
+                  <p className="text-sm text-zinc-300 line-clamp-3">{script.content}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Approval Workflow - Already included in script section */}
+            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-zinc-100 flex items-center gap-2">
+                    <UserCheck className="w-5 h-5 text-emerald-400" />
+                    Approval Status
+                  </h3>
+                  <p className="text-sm text-zinc-400 mt-1">
+                    {reviewers.filter(r => r.status === "approved").length} of {reviewers.length} approved
+                  </p>
+                </div>
+                {reviewers.every(r => r.status === "approved") && (
+                  <span className="px-3 py-1.5 bg-emerald-600/20 text-emerald-400 rounded-lg text-sm font-medium">
+                    ✓ Ready to Export
+                  </span>
+                )}
+              </div>
+
+              {/* Approval List */}
+              <div className="space-y-3">
+                {reviewers.map((reviewer) => (
+                  <div key={reviewer.id} className="flex items-center justify-between bg-zinc-800/50 rounded-lg p-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
+                        reviewer.status === "approved" 
+                          ? "bg-emerald-600/20 text-emerald-400 border border-emerald-600/30"
+                          : "bg-zinc-700 text-zinc-400 border border-zinc-600"
+                      }`}>
+                        {reviewer.status === "approved" ? <CheckCircle className="w-5 h-5" /> : reviewer.role[0]}
+                      </div>
+                      <div>
+                        <p className="font-medium text-zinc-200">{reviewer.role}</p>
+                        {reviewer.email && <p className="text-xs text-zinc-500">{reviewer.email}</p>}
+                        {reviewer.timestamp && (
+                          <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
+                            <Clock className="w-3 h-3" />
+                            Approved {new Date(reviewer.timestamp).toLocaleDateString()}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <span className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+                      reviewer.status === "approved"
+                        ? "bg-emerald-600/20 text-emerald-400"
+                        : "bg-zinc-700 text-zinc-400"
+                    }`}>
+                      {reviewer.status === "approved" ? "Approved" : "Pending"}
+                    </span>
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Export Actions */}
+            {reviewers.every(r => r.status === "approved") && (
+              <div className="flex gap-3">
+                <button className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg transition-colors">
+                  <FileText className="w-5 h-5" />
+                  Export .docx
+                </button>
+                <button className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors">
+                  <Download className="w-5 h-5" />
+                  Export PDF
+                </button>
+              </div>
+            )}
           </div>
         )}
       </main>
@@ -388,7 +620,7 @@ With that, let's open the line for questions.`
               <span>•</span>
               <a href="#" className="hover:text-zinc-300 transition-colors">Data Processing Agreement</a>
             </div>
-            <p>© 2026 Earnings Pipeline. All rights reserved.</p>
+            <p>© 2026 CallReady. All rights reserved.</p>
           </div>
         </div>
       </footer>
