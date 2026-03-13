@@ -338,16 +338,58 @@ With that, let's open the line for questions.`
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 mt-16">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between text-sm text-zinc-500">
-          <div className="flex items-center gap-4">
-            <span>SEC/Reg FD Compliant</span>
-            <span>•</span>
-            <span>SOC2 Ready</span>
-            <span>•</span>
-            <span>Full Audit Trail</span>
+      <footer className="border-t border-zinc-800 mt-16 bg-zinc-900/30">
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          {/* Security & Compliance Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-6">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span className="text-xs text-emerald-400 font-medium">SOC2 Ready</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span className="text-xs text-blue-400 font-medium">SEC/Reg FD Compliant</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span className="text-xs text-violet-400 font-medium">Full Audit Trail</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+              <span className="text-xs text-amber-400 font-medium">Data Never Used for Training</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <span className="text-xs text-cyan-400 font-medium">Enterprise Encryption</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800/50 rounded-lg">
+              <svg className="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span className="text-xs text-rose-400 font-medium">No Data Retention</span>
+            </div>
           </div>
-          <p>© 2026 Earnings Pipeline</p>
+          
+          <div className="flex items-center justify-between text-sm text-zinc-500 pt-6 border-t border-zinc-800">
+            <div className="flex items-center gap-4">
+              <a href="#" className="hover:text-zinc-300 transition-colors">Privacy Policy</a>
+              <span>•</span>
+              <a href="#" className="hover:text-zinc-300 transition-colors">Terms of Service</a>
+              <span>•</span>
+              <a href="#" className="hover:text-zinc-300 transition-colors">Data Processing Agreement</a>
+            </div>
+            <p>© 2026 Earnings Pipeline. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
