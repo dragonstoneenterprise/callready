@@ -191,7 +191,7 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Basic approval workflow</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Email support</li>
               </ul>
-              <button onClick={() => setActiveTab("script")} className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Get Started</button>
+              <button onClick={() => window.open("https://9245368029329.gumroad.com/l/callready", "_blank")} className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Get Started</button>
             </div>
             <div className="p-8 bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/30 rounded-2xl relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-black text-xs font-semibold rounded-full">Most Popular</div>
@@ -214,7 +214,7 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Custom integrations</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Dedicated support</li>
               </ul>
-              <button className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Contact Sales</button>
+              <button onClick={() => window.location.href = "mailto:sales@dragonstone.online?subject=CallReady Enterprise"} className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Contact Sales</button>
             </div>
           </div>
         </div>
