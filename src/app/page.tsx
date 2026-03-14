@@ -142,10 +142,14 @@ With that, let's open the line for questions.`
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-zinc-400">6 stages • SEC compliant</span>
-            <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors">
+            <a 
+              href="https://calendly.com/callready-demo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors"
+            >
               Request Demo
-            </button>
+            </a>
           </div>
         </div>
       </header>
@@ -188,13 +192,58 @@ With that, let's open the line for questions.`
       <main className="max-w-6xl mx-auto px-6 py-8">
         {/* Intake Stage */}
         {activeTab === "intake" && (
-          <div className="max-w-2xl mx-auto text-center py-16">
-            <div className="mb-8">
-              <div className="w-20 h-20 bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Upload className="w-10 h-10 text-zinc-400" />
+          <div className="max-w-3xl mx-auto text-center py-12">
+            {/* Hero Section */}
+            <div className="mb-12">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-600/10 border border-emerald-600/20 rounded-full text-emerald-400 text-sm font-medium mb-4">
+                <Sparkles className="w-4 h-4" />
+                AI-Powered Earnings Call Preparation
               </div>
-              <h2 className="text-2xl font-bold text-zinc-100 mb-2">Upload Quarterly Materials</h2>
-              <p className="text-zinc-400">Drop your 10-Q, 10-K, or earnings transcript to get started</p>
+              <h2 className="text-4xl font-bold text-zinc-100 mb-4">
+                Prepare Your <span className="text-emerald-400">Earnings Call</span> in Minutes
+              </h2>
+              <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+                Transform quarterly financials into board-ready scripts with multi-user approval. 
+                Used by pre-IPO and public companies.
+              </p>
+            </div>
+
+            {/* Value Props */}
+            <div className="grid grid-cols-3 gap-4 mb-12 text-left">
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5">
+                <div className="w-10 h-10 bg-emerald-600/20 rounded-lg flex items-center justify-center mb-3">
+                  <Clock className="w-5 h-5 text-emerald-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-200">2 Hours vs 2 Weeks</p>
+                <p className="text-xs text-zinc-500 mt-1">Generate scripts in hours, not weeks</p>
+              </div>
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5">
+                <div className="w-10 h-10 bg-violet-600/20 rounded-lg flex items-center justify-center mb-3">
+                  <UserCheck className="w-5 h-5 text-violet-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-200">Multi-User Approval</p>
+                <p className="text-xs text-zinc-500 mt-1">CEO, CFO, Legal review workflow</p>
+              </div>
+              <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5">
+                <div className="w-10 h-10 bg-amber-600/20 rounded-lg flex items-center justify-center mb-3">
+                  <CheckCircle className="w-5 h-5 text-amber-400" />
+                </div>
+                <p className="text-sm font-medium text-zinc-200">Full Audit Trail</p>
+                <p className="text-xs text-zinc-500 mt-1">SEC compliant documentation</p>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <p className="text-sm text-zinc-500 mb-4">Trusted by companies preparing for their first earnings call</p>
+              <div className="flex items-center justify-center gap-8 opacity-50">
+                <div className="text-zinc-400 font-semibold">Pre-IPO Co.</div>
+                <div className="text-zinc-400 font-semibold">Public Co.</div>
+                <div className="text-zinc-400 font-semibold">IR Teams</div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <p className="text-sm text-zinc-400 mb-4">Upload your quarterly materials to get started</p>
             </div>
 
             <div
