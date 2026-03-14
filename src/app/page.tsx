@@ -203,7 +203,7 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Full audit trail</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Priority support</li>
               </ul>
-              <button onClick={() => setActiveTab("script")} className="w-full py-3 bg-emerald-500 text-black font-semibold rounded-xl hover:bg-emerald-400 transition-colors">Get Started</button>
+              <button onClick={() => window.open("https://9245368029329.gumroad.com/l/callready", "_blank")} className="w-full py-3 bg-emerald-500 text-black font-semibold rounded-xl hover:bg-emerald-400 transition-colors">Subscribe Now</button>
             </div>
             <div className="p-8 bg-zinc-900/50 border border-zinc-800 rounded-2xl">
               <h3 className="text-lg font-semibold text-zinc-400">Enterprise</h3>
