@@ -191,7 +191,7 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Basic approval workflow</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Email support</li>
               </ul>
-              <button className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Get Started</button>
+              <button onClick={() => alert('Demo mode - In production, this would open a signup form')} className="w-full py-3 border border-zinc-700 rounded-xl hover:bg-zinc-800 transition-colors">Get Started</button>
             </div>
             <div className="p-8 bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/30 rounded-2xl relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-black text-xs font-semibold rounded-full">Most Popular</div>
@@ -203,7 +203,7 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Full audit trail</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> Priority support</li>
               </ul>
-              <button className="w-full py-3 bg-emerald-500 text-black font-semibold rounded-xl hover:bg-emerald-400 transition-colors">Get Started</button>
+              <button onClick={() => alert('Demo mode - In production, this would open a signup form')} className="w-full py-3 bg-emerald-500 text-black font-semibold rounded-xl hover:bg-emerald-400 transition-colors">Get Started</button>
             </div>
             <div className="p-8 bg-zinc-900/50 border border-zinc-800 rounded-2xl">
               <h3 className="text-lg font-semibold text-zinc-400">Enterprise</h3>
@@ -220,17 +220,78 @@ Looking ahead to Q4, we expect revenue of ${data.guidance}.`
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <section className="py-12 border-t border-zinc-800/50">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="flex flex-wrap items-center justify-center gap-8 text-zinc-500 text-sm">
-            <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-emerald-400" /> SOC2 Ready</span>
-            <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" /> SEC/Reg FD Compliant</span>
-            <span className="flex items-center gap-2"><FileText className="w-4 h-4 text-emerald-400" /> Full Audit Trail</span>
-            <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-emerald-400" /> Data Never Used for Training</span>
+      {/* Demo App Section - Shows when user clicks Try Demo */}
+      {activeTab === "script" && (
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-zinc-100 mb-2">Your Earnings Call Script</h2>
+            <p className="text-zinc-400">Review, approve, and export</p>
+          </div>
+
+          {/* Demo Scripts */}
+          <div className="space-y-4 max-w-4xl mx-auto mb-8">
+            {scripts.map((script, i) => (
+              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+                <div className="bg-zinc-800/50 px-6 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="px-2 py-1 bg-emerald-600/20 text-emerald-400 text-xs font-medium rounded">{script.speaker}</span>
+                    <span className="font-medium text-zinc-200">{script.title}</span>
+                  </div>
+                  <button className="text-xs text-zinc-400 hover:text-zinc-200">Copy</button>
+                </div>
+                <div className="p-6">
+                  <p className="text-zinc-300 whitespace-pre-wrap leading-relaxed">{script.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Approval Section */}
+          <div className="max-w-2xl mx-auto bg-zinc-900/50 border border-zinc-800 rounded-xl p-6 mb-8">
+            <h3 className="text-lg font-semibold text-zinc-100 mb-4 flex items-center gap-2">
+              <UserCheck className="w-5 h-5 text-emerald-400" />
+              Multi-User Approval
+            </h3>
+            <div className="space-y-3">
+              {reviewers.map((reviewer) => (
+                <div key={reviewer.id} className="flex items-center justify-between bg-zinc-800/50 rounded-lg p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center text-sm text-zinc-400">
+                      {reviewer.role[0]}
+                    </div>
+                    <div>
+                      <p className="font-medium text-zinc-200">{reviewer.role}</p>
+                      <p className="text-xs text-zinc-500">{reviewer.status === "pending" ? "Pending approval" : "Approved"}</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setReviewers(prev => prev.map(r => 
+                        r.id === reviewer.id ? { ...r, status: "approved" } : r
+                      ));
+                    }}
+                    className="px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 text-sm rounded-lg transition-colors"
+                  >
+                    Approve
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Export Buttons */}
+          <div className="flex items-center justify-center gap-4">
+            <button className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl flex items-center gap-2">
+              <FileText className="w-5 h-5" />
+              Export .docx
+            </button>
+            <button className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-xl flex items-center gap-2 font-semibold">
+              <Download className="w-5 h-5" />
+              Export PDF
+            </button>
           </div>
         </div>
-      </section>
+      )}
 
       {/* Footer */}
       <footer className="py-8 border-t border-zinc-800/50">
